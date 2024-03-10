@@ -4,8 +4,10 @@ import org.springframework.core.io.Resource;
 
 import com.projet.uploadfile.entities.Student;
 
+import java.util.List;
+
 public interface IStudentService {
-    Student SaveStudent(Student student);
-    
-    Resource loadFile(String fileName);
+    Student saveStudent(Student student);
+    Student updateStudent(Student student);
+    List<Student> allStudent();
 }

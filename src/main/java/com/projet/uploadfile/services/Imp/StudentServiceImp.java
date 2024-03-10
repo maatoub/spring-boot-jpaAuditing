@@ -2,6 +2,7 @@ package com.projet.uploadfile.services.Imp;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -17,27 +18,21 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class StudentServiceImp implements IStudentService {
 
-    private final ResourceLoader resourceLoader;
     private StudentRepo repository;
 
     @Override
-    public Student SaveStudent(Student student) {
+    public Student saveStudent(Student student) {
         return repository.save(student);
     }
 
     @Override
-    public Resource loadFile(String fileName) {
-        try {      
-            Path filePath = Paths.get("/uploads/", fileName);
-            Resource resource = resourceLoader.getResource("file:" + filePath.toString());
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                   throw new RuntimeException("Le fichier n'a pas pu être trouvé : " + fileName);
-            }
-        } catch (Exception e) {   
-            throw new RuntimeException("Une erreur s'est produite lors du chargement du fichier : " + fileName, e);
-        }
+    public Student updateStudent(Student student) {
+        student.setId(student.getId());
+        return repository.save(student);
     }
 
+    @Override
+    public List<Student> allStudent() {
+        return repository.findAll();
+    }
 }
